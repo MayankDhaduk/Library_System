@@ -1,0 +1,19 @@
+body {
+    background-color: #ffffff;
+}
+.container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.card {
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: #f8f9fa;
+}
+.btn-outline-primary {
+    width: 100%;
+    font-size: 1.2rem;
+}

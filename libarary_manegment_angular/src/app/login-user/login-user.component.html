@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="row w-100">
+        <div class="col-md-6 m-auto">
+            <div class="card">
+                <div class="form-group text-center">
+                    <h1 class="font-italic fs-1 text-primary">
+                        Library Login
+                    </h1>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingEmail" placeholder="Username"
+                        [(ngModel)]="uname">
+                    <label for="floatingEmail">Username</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" id="floatingPassword" class="form-control" placeholder="Password"
+                        [(ngModel)]="pass">
+                    <label for="floatingPassword">Password</label>
+                </div>
+                <div class="form-group text-center">
+                    <input type="submit" class="btn btn-outline-primary" value="Login" (click)="login()">
+                </div>
+
+                <p>{{message}}</p>
+
+            </div>
+        </div>
+    </div>
+</div>

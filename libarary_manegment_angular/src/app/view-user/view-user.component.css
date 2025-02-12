@@ -1,0 +1,61 @@
+/* Table Styling */
+.table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 85%;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 5%;
+    margin-left: 15%;
+}
+
+/* Table Header */
+.thead-dark th {
+    background-color: #212529 !important;
+    color: white !important;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+/* Table Row Hover Effect */
+.table-hover tbody tr:hover {
+    background-color: #343a40 !important;
+}
+
+/* Buttons */
+.btn-warning {
+    color: black;
+    font-weight: bold;
+}
+
+.btn-danger {
+    font-weight: bold;
+}
+
+/* Mobile-Friendly Table */
+@media (max-width: 768px) {
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .register-heading {
+        font-size: 2rem;
+        /* Slightly Smaller Font on Mobile */
+        padding: 10px;
+    }
+}
+
+
+.register-heading {
+    font-size: 3rem;
+
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(to right, #007bff, #6610f2);
+    padding: 15px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 15%;
+    margin-left: 10%;
+}

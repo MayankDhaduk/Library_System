@@ -1,0 +1,46 @@
+<app-admin></app-admin>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12 m-auto">
+            <div class="table-responsive">
+
+                <div class="user_set text-center">
+                    <h1 class="register-heading">Register User</h1>
+                </div>
+
+                <!-- Makes the table scrollable on small screens -->
+                <table class="table table-dark table-bordered table-hover text-center">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Id</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Password</th>
+                            <th>Gender</th>
+                            <th>Mobile No.</th>
+                            <th>Actions</th> <!-- For Edit & Delete Buttons -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (item of users; track item) {
+                        <tr>
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.uname }}</td>
+                            <td>{{ item.email }}</td>
+                            <td>{{ item.pass }}</td>
+                            <td>{{ item.gender }}</td>
+                            <td>{{ item.phone }}</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</button>
+                                <button class="btn btn-sm btn-danger" (click)="deleteUser(item.id)"><i
+                                        class="fas fa-trash"></i> Delete</button>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
