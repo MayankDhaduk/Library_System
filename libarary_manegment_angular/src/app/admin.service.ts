@@ -4,6 +4,7 @@ import { AdminCategory } from '../admin-category';
 import { Observable } from 'rxjs';
 import { User } from '../user';
 import { UUID } from 'node:crypto';
+import { AdminProduct } from '../admin-product';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,15 @@ export class AdminService {
     return this.http.get<AdminCategory[]>(`${this.adminUrl}/viewcat`);
   }
 
-  deleteCat(catId: UUID): Observable<void> {
-    return this.http.delete<void>(`${this.adminUrl}/deletecat/${catId}`)
+  deleteCat(id: UUID): Observable<void> {
+    return this.http.delete<void>(`${this.adminUrl}/deletecat/${id}`)
+  }
+
+  addProduct(formData: FormData): Observable<AdminProduct> {
+    return this.http.post<AdminProduct>(`${this.adminUrl}/addproduct`, formData);
+  }
+
+  viewProduct(): Observable<AdminProduct[]> {
+    return this.http.get<AdminProduct[]>(`${this.adminUrl}/viewproduct`);
   }
 }

@@ -12,5 +12,7 @@ public interface CategoryService {
 	public List<Category> viewAllCategory();
 
 	public void deleteUser(UUID id);
+	
+	public Category getById(UUID id);
 
 }

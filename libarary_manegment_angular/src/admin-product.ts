@@ -4,8 +4,11 @@ export class AdminProduct {
     id?: UUID;
     pname: string = '';
     pdescription: string = '';
-    pprice: number = 0;
+    pprice: string = '';
     pimage: string = '';
-    pqty: number = 0;
-    
+    pqty: string = '';
+    pauthor: string = '';
+    planguage: string = '';
+    catid: number = 0;
+
 }

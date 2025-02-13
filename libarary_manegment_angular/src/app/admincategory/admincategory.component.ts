@@ -17,7 +17,7 @@ export class AdmincategoryComponent implements OnInit {
 
   constructor(private categoryService: AdminService) { }
 
-  category: AdminCategory[] = [];
+  categories: AdminCategory[] = [];
   newCategory: AdminCategory = { catname: '' }
 
   ngOnInit(): void {
@@ -29,6 +29,7 @@ export class AdmincategoryComponent implements OnInit {
       console.log(data);
       console.log("Category Added Successfully")
       this.newCategory = { catname: '' }
+      this.viewCategory();
     },
       (error) => {
         console.log(error)
@@ -39,7 +40,7 @@ export class AdmincategoryComponent implements OnInit {
   viewCategory() {
     this.categoryService.viewCat().subscribe((data) => {
       console.log(data);
-      this.category = data;
+      this.categories = data;
     },
       (error) => {
         console.log("Error is : ", error)
@@ -47,9 +48,9 @@ export class AdmincategoryComponent implements OnInit {
     )
   }
 
-  deleteCat(catId?: UUID) {
-    if (catId) {
-      this.categoryService.deleteCat(catId).subscribe((data) => {
+  deleteCat(id?: UUID) {
+    if (id) {
+      this.categoryService.deleteCat(id).subscribe((data) => {
         console.log(data);
         console.log("Category Deleted Successfully");
         this.viewCategory();

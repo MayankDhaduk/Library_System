@@ -34,4 +34,10 @@ public class CategoryServiceImpl implements CategoryService {
 		categoryRepo.deleteById(id);
 	}
 
+	@Override
+	public Category getById(UUID id) {
+
+		return categoryRepo.findById(id).orElseThrow(() -> new RuntimeException("Category Not Found"));
+	}
+
 }

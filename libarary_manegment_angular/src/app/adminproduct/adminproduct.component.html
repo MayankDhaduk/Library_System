@@ -1,0 +1,117 @@
+<app-admin></app-admin>
+
+<div class="container" style="margin-top: 10%;">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card shadow-lg p-4 animate__animated animate__fadeIn">
+
+                <form enctype="multipart/form-data" method="post">
+                    <div class="text-center">
+                        <h1 class="text-primary fw-bold">Product Form</h1>
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <input type="text" class="form-control" id="floatingProduct" placeholder="Product Name"
+                            [(ngModel)]="newProduct.pname" [ngModelOptions]="{standalone: true}">
+                        <label for="floatingProduct">Product Name</label>
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <input type="text" class="form-control" id="floatingProductPrice" placeholder="Product Price"
+                            [(ngModel)]="newProduct.pprice" [ngModelOptions]="{standalone: true}">
+                        <label for="floatingProductPrice">Product Price</label>
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <input type="text" class="form-control" id="floatingProductQty" placeholder="Product Qty"
+                            [(ngModel)]="newProduct.pqty" [ngModelOptions]="{standalone: true}">
+                        <label for="floatingProductQty">Product Qty</label>
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <input type="text" class="form-control" id="floatingProductAuthor" placeholder="Product Author"
+                            [(ngModel)]="newProduct.pauthor" [ngModelOptions]="{standalone: true}">
+                        <label for="floatingProductAuthor">Product Author</label>
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <input type="text" class="form-control" id="floatingProductLanguage"
+                            placeholder="Product Language" [(ngModel)]="newProduct.planguage"
+                            [ngModelOptions]="{standalone: true}">
+                        <label for="floatingProductLanguage">Product Language</label>
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <input type="file" class="form-control" id="floatingProductImage" placeholder="Product Image"
+                            (change)="onFileSelected($event)">
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <textarea class="form-control" aria-label="With textarea" id="floatingDescription"
+                            placeholder="Product Description" [(ngModel)]="newProduct.pdescription"
+                            [ngModelOptions]="{standalone: true}"></textarea>
+                        <label for="floatingProductDescription">Product Description</label>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="categoryDropdown">Select Category</label>
+                        <select class="form-control" id="categoryDropdown" [(ngModel)]="selectedCategory" name="catid"
+                            [ngModelOptions]="{standalone: true}">
+                            <option *ngFor="let category of categories" [value]="category.id">{{ category.catname }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="text-center">
+                        <button class="btn btn-primary w-100" (click)="addproduct()">Add Product</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+            <div class="table-responsive animate__animated animate__fadeInUp">
+                <table class="table table-bordered table-hover text-center shadow-lg">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>Product Id</th>
+                            <th>Product Name</th>
+                            <!-- <th>Category</th> -->
+                            <th>Product Price</th>
+                            <th>Product Qty</th>
+                            <th>Product Author</th>
+                            <th>Language</th>
+                            <th>Imaeg</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of products">
+                            <td>{{item.id}}</td>
+                            <td>{{item.pname}}</td>
+                            <td>{{item.pprice}}</td>
+                            <td>{{item.pqty}}</td>
+                            <td>{{item.pauthor}}</td>
+                            <td>{{item.planguage}}</td>
+                            <td>
+                                <img src="data:imaeg/jpg;base64,{{item.pimage}}" alt="{{item.pimage}}" height="100px"
+                                    width="100px" style="border-radius: 50%;">
+                            </td>
+                            <td>{{item.pdescription}}</td>
+                            <!-- <td>
+                                <button class="btn btn-danger btn-sm">
+                                    Delete
+                                </button>
+                            </td> -->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
