@@ -38,14 +38,14 @@ export class AdmincategoryComponent implements OnInit {
   }
 
   viewCategory() {
-    this.categoryService.viewCat().subscribe((data) => {
-      console.log(data);
-      this.categories = data;
-    },
-      (error) => {
-        console.log("Error is : ", error)
+    this.categoryService.viewCat().subscribe({
+      next: (data) => {
+        this.categories = data;
+      },
+      error: (error) => {
+        console.error("Error fetching categories:", error);
       }
-    )
+    })
   }
 
   deleteCat(id?: UUID) {

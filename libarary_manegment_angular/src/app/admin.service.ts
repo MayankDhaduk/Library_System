@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { User } from '../user';
 import { UUID } from 'node:crypto';
 import { AdminProduct } from '../admin-product';
+import { json } from 'node:stream/consumers';
+import { Cart } from '../admin-cart';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +21,26 @@ export class AdminService {
     return this.http.post<AdminCategory>(`${this.adminUrl}/addcat`, category);
   }
 
-  viewCat(): Observable<AdminCategory[]> {
-    return this.http.get<AdminCategory[]>(`${this.adminUrl}/viewcat`);
+  viewCat(): Observable<any> {
+    return new Observable(observer => {
+      this.http.get(`${this.adminUrl}/viewcat`, { responseType: 'text' })
+        .subscribe({
+          next: (responseText) => {
+            try {
+              const parseData = JSON.parse(responseText);
+              observer.next(parseData); // ✅ Send parsed JSON to subscribers
+              observer.complete();
+            } catch (error) {
+              console.error("Invalid JSON received:", responseText);
+              observer.error("Invalid JSON format");
+            }
+          },
+          error: (error) => {
+            console.error("Error fetching categories:", error);
+            observer.error(error);
+          }
+        })
+    })
   }
 
   deleteCat(id: UUID): Observable<void> {
@@ -33,5 +53,9 @@ export class AdminService {
 
   viewProduct(): Observable<AdminProduct[]> {
     return this.http.get<AdminProduct[]>(`${this.adminUrl}/viewproduct`);
+  }
+
+  deleteProduct(id: UUID): Observable<void> {
+    return this.http.delete<void>(`${this.adminUrl}/deleteproduct/${id}`);
   }
 }

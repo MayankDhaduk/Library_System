@@ -1,0 +1,70 @@
+<app-libraryshow></app-libraryshow>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <!-- ✅ Sidebar for Filters -->
+        <!-- <aside class="col-md-3 sidebar bg-light p-4 shadow">
+            <h4 class="text-primary">Filter Books</h4>
+            <div class="mb-3">
+                <label for="search" class="form-label">Search</label>
+                <input type="text" id="search" class="form-control" placeholder="Search by name..." [(ngModel)]="searchText">
+            </div>
+            <div class="mb-3">
+                <label for="category" class="form-label">Category</label>
+                <select id="category" class="form-select" [(ngModel)]="selectedCategory">
+                    <option value="">All Categories</option>
+                    <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Max Price</label>
+                <input type="range" id="price" class="form-range" min="0" max="500" step="10" [(ngModel)]="maxPrice">
+                <span class="fw-bold">${{ maxPrice }}</span>
+            </div>
+        </aside> -->
+
+        <!-- ✅ Book Display Section
+        <section class="col-md-8">
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-4 mb-4" *ngFor="let book of products" style="width: fit-content; margin-right: 300px;" >
+                    <div class="card book-card h-100 shadow">
+                        <img src="data:image/jpg;base64,{{book.pimage}}" class="card-img-top" alt="{{ book.pname }}">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{ book.pname }}</h5>
+                            <p class="card-text"><strong>Author:</strong> {{ book.pauthor }}</p>
+                            <p class="card-text text-success fw-bold">${{ book.pprice }}</p>
+                            <button class="btn btn-primary w-100 rounded-pill">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+
+        <section class="latest-products spad">
+            <div class="container">
+                <div class="row" id="product-list">
+                    <div class="col-lg-3 col-sm-6 mb-4" *ngFor="let book of products">
+                        <div class="single-product-item shadow-sm">
+                            <figure>
+                                <img src="data:image/jpg;base64,{{book.pimage}}" class="card-img-top"
+                                    alt="{{ book.pname }}">
+                            </figure>
+                            <div class="product-text text-center">
+                                <h6 class="product-title">{{ book.pname }}</h6>
+                                <p class="card-text"><strong>Author:</strong> {{ book.pauthor }}</p>
+                                <p class="product-price">${{ book.pprice }}</p>
+                                <!-- <button class="btn btn-primary w-100 rounded-pill" (click)="addCart(book.id)">Add to
+                                    Cart</button> -->
+                                <input type="submit" class="btn btn-primary w-100 rounded-pill"
+                                    (click)="addcat(book.id)" value="Add to Cart">
+                                <!-- <a [routerLink]="['/product-detail', product.id]" class="btn btn-primary">View
+                                    Details</a> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>

@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UserServiceService } from '../user-service.service';
 import { Router } from '@angular/router';
+import { User } from '../../user';
 
 @Component({
   selector: 'app-login-user',
@@ -17,20 +18,52 @@ export class LoginUserComponent {
   pass: string = '';
   message: string = '';
 
-  constructor(private userService: UserServiceService,private router: Router) { }
+  constructor(private userService: UserServiceService, private router: Router) { }
+
+  // login() {
+  //   this.userService.userLogin(this.uname, this.pass).subscribe(
+  //     response => {
+  //       this.message = response.message;
+  //       if (response.success) {
+  //         this.router.navigate(['/viewproduct']);
+  //       }
+  //       else {
+
+  //         this.router.navigate(['/login']);
+  //       }
+
+  //       this.uname = '';
+  //       this.pass = '';
+
+  //     },
+  //     error => {
+  //       this.message = "Login Failed. Please try again.";
+  //       this.router.navigate(['/login']);
+  //     }
+  //   )
+  // }
 
   login() {
-    this.userService.userLogin(this.uname, this.pass).subscribe(response => {
-      this.message = response.message;
-      this.uname = '';
-      this.pass = '';
-      this.router.navigate(['/library'])
+    if (!this.uname || !this.pass) {
+      this.message = "Username and Password are required!";
+      return; // ✅ Prevent empty login attempts
+    }
 
-    },
-      error => {
-        this.message = "Login Faild";
+    this.userService.userLogin(this.uname, this.pass).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.router.navigate(['/viewproduct'], { queryParams: { userId: response.userId } });
+        } else {
+          this.message = response.message;
+          this.router.navigate(['/login']);
+        }
+      },
+      error: (error) => {
+        this.message = "Login Failed. Please try again.";
+        console.error("Login error:", error);
+        this.router.navigate(['/login']);
       }
-    )
+    });
   }
 
 

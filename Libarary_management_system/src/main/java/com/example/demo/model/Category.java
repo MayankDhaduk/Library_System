@@ -3,6 +3,8 @@ package com.example.demo.model;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,6 +25,7 @@ public class Category {
 	private String catname;
 
 	@OneToMany(mappedBy = "category", cascade = { CascadeType.ALL })
+	@JsonManagedReference
 	List<Product> product;
 
 	public UUID getId() {

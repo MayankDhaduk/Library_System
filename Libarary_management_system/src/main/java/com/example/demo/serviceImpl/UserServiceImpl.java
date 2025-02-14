@@ -36,13 +36,26 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean userLogin(String uname, String pass) {
-		
-		Optional<User> user = userRepo.findByUname(uname);
-		
-		return user.isPresent() && user.get().getPass().equals(pass);
+	public User getById(UUID id) {
+
+		return userRepo.findById(id).orElseThrow(() -> new RuntimeException("User Not Found"));
 	}
 
-	
+	@Override
+	public UUID userLogin(String uname, String pass) {
+
+		Optional<User> user = userRepo.findByUname(uname);
+		if (user.isPresent() && user.get().getPass().equals(pass)) {
+			return user.get().getId();
+		}
+
+		return null;
+	}
+
+	@Override
+	public UUID getUserIdByUsername(String uname) {
+		Optional<User> user = userRepo.findByUname(uname);
+		return (user != null) ? user.get().getId() : null;
+	}
 
 }

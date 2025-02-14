@@ -88,27 +88,37 @@
                             <th>Language</th>
                             <th>Imaeg</th>
                             <th>Description</th>
+                            <th>Action</th>
+
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let item of products">
                             <td>{{item.id}}</td>
                             <td>{{item.pname}}</td>
+                            <!-- <td>{{item.catid}}</td> -->
                             <td>{{item.pprice}}</td>
                             <td>{{item.pqty}}</td>
                             <td>{{item.pauthor}}</td>
                             <td>{{item.planguage}}</td>
                             <td>
-                                <img src="data:imaeg/jpg;base64,{{item.pimage}}" alt="{{item.pimage}}" height="100px"
+                                <!-- <img *ngIf="item.imageUrl" [src]="item.imageUrl" alt="Product Image" height="100px"
+                                    width="100px" style="border-radius: 50%;">
+                                <img *ngIf="!item.imageUrl && item.pimage" [src]="'data:image/jpg;base64,'+item.pimage"
+                                    alt="Product Image" height="100px" width="100px" style="border-radius: 50%;"> -->
+                                <img src="data:image/jpg;base64,{{item.pimage}}" alt="Product Image" height="100px"
                                     width="100px" style="border-radius: 50%;">
                             </td>
                             <td>{{item.pdescription}}</td>
-                            <!-- <td>
-                                <button class="btn btn-danger btn-sm">
+
+
+                            <td>
+                                <button class="btn btn-danger btn-sm" (click)="deleteProduct(item.id)">
                                     Delete
                                 </button>
-                            </td> -->
+                            </td>
                         </tr>
+
                     </tbody>
                 </table>
             </div>

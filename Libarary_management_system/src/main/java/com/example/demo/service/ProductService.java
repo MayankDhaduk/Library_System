@@ -10,6 +10,10 @@ public interface ProductService {
 	public Product addProduct(Product product);
 
 	public List<Product> viewAllProduct();
-	
+
 	public List<Product> viewProductByCategory(UUID categoryId);
+
+	public void deleteById(UUID id);
+
+	public Product productById(UUID id);
 }

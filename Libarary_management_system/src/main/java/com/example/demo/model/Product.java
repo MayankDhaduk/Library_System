@@ -1,6 +1,10 @@
 package com.example.demo.model;
 
+import java.util.List;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -10,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -35,10 +40,17 @@ public class Product {
 	private String pimage;
 	@Column(columnDefinition = "longtext")
 	private String pdescription;
+	@Column(name = "imageUrl")
+	private String imageUrl;
 
 	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name = "catid")
+	@JsonBackReference
 	Category category;
+
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	@JsonManagedReference
+	List<Cart> carts;
 
 	public UUID getId() {
 		return id;
@@ -111,7 +123,13 @@ public class Product {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-	
-	
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
 
 }

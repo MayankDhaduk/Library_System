@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AdminService } from '../admin.service';
 import { AdminCategory } from '../../admin-category';
+import { UUID } from 'node:crypto';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class AdminproductComponent implements OnInit {
   products: AdminProduct[] = [];
   categories: AdminCategory[] = [];
   selectedCategory: number = 0;
-  newProduct: AdminProduct = { pname: '', pprice: '', pqty: '', pauthor: '', planguage: '', pimage: '', pdescription: '', catid: 0 }
+  newProduct: AdminProduct = { pname: '', pprice: '', pqty: '', pauthor: '', planguage: '', pimage: '', pdescription: '' }
   imageFile?: File;
 
   constructor(private productService: AdminService, private categoryService: AdminService) { }
@@ -56,12 +57,13 @@ export class AdminproductComponent implements OnInit {
     this.productService.addProduct(formData).subscribe({
       next: (response) => {
         console.log(response);
-        this.newProduct = { pname: '', pprice: '', pqty: '', pauthor: '', planguage: '', pimage: '', pdescription: '', catid: 0 };
+        this.newProduct = { pname: '', pprice: '', pqty: '', pauthor: '', planguage: '', pimage: '', pdescription: '' };
         this.viewproduct();
       },
       error: (error) => {
         alert("Error Product not Register")
         console.log(error)
+        this.viewproduct();
       }
     })
 
@@ -77,4 +79,18 @@ export class AdminproductComponent implements OnInit {
     )
   }
 
+  deleteProduct(id?: UUID) {
+    if (id) {
+      this.productService.deleteProduct(id).subscribe((data) => {
+        console.log(data);
+        console.log("Product delete Successfully");
+        this.viewproduct();
+      }, (error) => {
+        console.log("Error is : ", error)
+      })
+    }
+  }
+
 }
+
+

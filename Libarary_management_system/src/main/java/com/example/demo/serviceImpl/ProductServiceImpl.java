@@ -39,4 +39,17 @@ public class ProductServiceImpl implements ProductService {
 		return productRepo.findByCategory(category);
 	}
 
+	@Override
+	public void deleteById(UUID id) {
+
+		productRepo.deleteById(id);
+
+	}
+
+	@Override
+	public Product productById(UUID id) {
+		
+		return productRepo.findById(id).orElseThrow(()->new RuntimeException("Product Not Found"));
+	}
+
 }

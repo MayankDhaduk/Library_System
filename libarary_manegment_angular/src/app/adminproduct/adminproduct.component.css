@@ -5,6 +5,7 @@
 .btn-primary:hover {
     transform: scale(1.05);
 }
+
 body {
     background-color: #f8f9fa;
 }
@@ -13,4 +14,13 @@ body {
     border-radius: 12px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     background: white;
+}
+
+.btn-danger {
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-danger:hover {
+    transform: scale(1.05);
+    background-color: darkred;
 }
