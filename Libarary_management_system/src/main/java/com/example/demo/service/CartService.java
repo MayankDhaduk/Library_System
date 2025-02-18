@@ -11,8 +11,8 @@ public interface CartService {
 
 	public List<Cart> viewAllCart();
 
-	public List<Cart> cartByUser(UUID id);
-	
+//	public List<Cart> cartByUser(UUID id);
+
 	List<Cart> getCartByUser(UUID id);
 
 }

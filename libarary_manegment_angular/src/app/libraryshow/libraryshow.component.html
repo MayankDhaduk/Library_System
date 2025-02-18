@@ -11,7 +11,7 @@
         <!-- Collapsible wrapper -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Navbar brand -->
-            <a class="navbar-brand mt-2 mt-lg-0" href="/viewproduct">
+            <a class="navbar-brand mt-2 mt-lg-0">
                 <!-- <img src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp" height="15" alt="MDB Logo"
                     loading="lazy" /> -->
                 <h3>Library</h3>
@@ -19,13 +19,13 @@
             <!-- Left links -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="/library">Dashboard</a>
+                    <a class="nav-link" (click)="goToCart()">Cart</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/library">Team</a>
+                    <a class="nav-link">Team</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/library">Projects</a>
+                    <a class="nav-link">Projects</a>
                 </li>
             </ul>
             <!-- Left links -->
@@ -35,7 +35,7 @@
         <!-- Right elements -->
         <div class="d-flex align-items-center">
             <!-- Icon -->
-            <a class="text-reset me-3" href="/library">
+            <a class="text-reset me-3">
                 <i class="fas fa-shopping-cart"></i>
             </a>
 
@@ -50,13 +50,13 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
                     <li>
-                        <a class="dropdown-item" href="/library">My profile</a>
+                        <a class="dropdown-item">My profile</a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="/library">Settings</a>
+                        <a class="dropdown-item">Settings</a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="/library">Logout</a>
+                        <a class="dropdown-item">Logout</a>
                     </li>
                 </ul>
             </div>

@@ -35,10 +35,6 @@ export class UserServiceService {
     return this.http.get<AdminProduct[]>(`${this.apiUrl}/viewproduct`);
   }
 
-  // getuserbyId(): Observable<void> {
-  //   return this.http.get<void>(`${this.apiUrl}/getuserbyId`)
-  // }
-
   getUserId(uname: string): Observable<{ userId: UUID }> {
     return this.http.get<{ userId: UUID }>(`${this.apiUrl}/userid?uname=${uname}`);
   }
@@ -47,10 +43,22 @@ export class UserServiceService {
     return this.http.post<Cart>(`${this.apiUrl}/addcart?uid=${userId}&pid=${productId}`, {});
   }
 
-  viewCart(userId: UUID): Observable<Cart[]> {
-    return this.http.get<Cart[]>(`${this.apiUrl}/viewcart?uid=${userId}`)
+  // addToCart(userId: UUID, productId: UUID): Observable<any> {
+  //   return this.http.post<any>(`${this.apiUrl}/addcart`, { userId, productId })
+  // }
+
+  // getCartItem(userId : UUID):Observable<any>
+  // {
+  //   return this.http.get<any>(`${this.apiUrl}/viewcart/${userId}`)
+  // }
+
+  viewCart(userId: string): Observable<Cart[]> {
+    return this.http.get<Cart[]>(`${this.apiUrl}/viewcart?uid=${userId}`);
   }
 
+  viewCartAllProduct(): Observable<Cart[]> {
+    return this.http.get<Cart[]>(`${this.apiUrl}/viewallcart`);
+  }
 
 }
 

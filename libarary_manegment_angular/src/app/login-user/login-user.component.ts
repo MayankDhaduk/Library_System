@@ -43,28 +43,46 @@ export class LoginUserComponent {
   //   )
   // }
 
-  login() {
-    if (!this.uname || !this.pass) {
-      this.message = "Username and Password are required!";
-      return; // ✅ Prevent empty login attempts
-    }
+  // login() {
+  //   if (!this.uname || !this.pass) {
+  //     this.message = "Username and Password are required!";
+  //     return; // ✅ Prevent empty login attempts
+  //   }
 
+  //   this.userService.userLogin(this.uname, this.pass).subscribe({
+  //     next: (response) => {
+  //       if (response.success) {
+  //         this.router.navigate(['/viewproduct'], { queryParams: { userId: response.userId } });
+  //       } else {
+  //         this.message = response.message;
+  //         this.router.navigate(['/login']);
+  //       }
+  //     },
+  //     error: (error) => {
+  //       this.message = "Login Failed. Please try again.";
+  //       console.error("Login error:", error);
+  //       this.router.navigate(['/login']);
+  //     }
+  //   });
+  // }
+
+  login(): void {
     this.userService.userLogin(this.uname, this.pass).subscribe({
       next: (response) => {
-        if (response.success) {
+        if (response.success && response.userId) {
           this.router.navigate(['/viewproduct'], { queryParams: { userId: response.userId } });
         } else {
-          this.message = response.message;
+          console.error("Login failed. Redirecting to login.");
           this.router.navigate(['/login']);
         }
       },
-      error: (error) => {
-        this.message = "Login Failed. Please try again.";
-        console.error("Login error:", error);
+      error: () => {
+        console.error("Login error. Redirecting to login.");
         this.router.navigate(['/login']);
       }
     });
   }
+
 
 
 

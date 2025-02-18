@@ -14,8 +14,8 @@ import com.example.demo.model.User;
 @Repository
 public interface CartRepo extends JpaRepository<Cart, UUID> {
 
-	@Query("from Cart c where c.user = :user")
-	List<Cart> findByUser(@Param("user") User user);
+//	@Query("from Cart c where c.user = :user")
+//	List<Cart> findByUser(@Param("user") User user);
 
 	List<Cart> findByUserId(UUID userId);
 }

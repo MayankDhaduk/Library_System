@@ -13,5 +13,7 @@ import com.example.demo.model.Product;
 public interface ProductRepo extends JpaRepository<Product, UUID> {
 
 	List<Product> findByCategory(Category category);
+	
+//	Product getProductById(UUID productId);
 
 }

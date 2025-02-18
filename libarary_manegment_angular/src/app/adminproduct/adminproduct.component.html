@@ -96,16 +96,12 @@
                         <tr *ngFor="let item of products">
                             <td>{{item.id}}</td>
                             <td>{{item.pname}}</td>
-                            <!-- <td>{{item.catid}}</td> -->
                             <td>{{item.pprice}}</td>
                             <td>{{item.pqty}}</td>
                             <td>{{item.pauthor}}</td>
                             <td>{{item.planguage}}</td>
                             <td>
-                                <!-- <img *ngIf="item.imageUrl" [src]="item.imageUrl" alt="Product Image" height="100px"
-                                    width="100px" style="border-radius: 50%;">
-                                <img *ngIf="!item.imageUrl && item.pimage" [src]="'data:image/jpg;base64,'+item.pimage"
-                                    alt="Product Image" height="100px" width="100px" style="border-radius: 50%;"> -->
+
                                 <img src="data:image/jpg;base64,{{item.pimage}}" alt="Product Image" height="100px"
                                     width="100px" style="border-radius: 50%;">
                             </td>

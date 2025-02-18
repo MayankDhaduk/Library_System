@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,29 +41,12 @@ public class UserController {
 	@Autowired
 	CartService cartService;
 
+	/*--------- USER START---------*/
+
 	@PostMapping("/register")
 	public User addUser(@RequestBody User user) {
 		return userService.AddUser(user);
 	}
-
-//	@PostMapping("/login")
-//	public Map<String, String> login(@RequestBody Map<String, String> user) {
-//
-//		String uname = user.get("uname");
-//		String pass = user.get("pass");
-//
-//		boolean userLog = userService.userLogin(uname, pass);
-//
-//		Map<String, String> response = new HashMap();
-//		if (userLog) {
-//			response.put("message", "User Login Successfully");
-//		} else {
-//			response.put("message", "Invalid User Please Login First!!");
-//		}
-//
-//		return response;
-//
-//	}
 
 	@PostMapping("/login")
 	public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> user) {
@@ -111,10 +95,29 @@ public class UserController {
 		return userService.getById(id);
 	}
 
+	/*--------- USER END---------*/
+
+	/*--------- PRODUCT START----------*/
+
 	@GetMapping("/viewproduct")
 	public List<Product> viewallProduct() {
 		return productService.viewAllProduct();
 	}
+
+//	@GetMapping("/getproduct/{productId}")
+//	public ResponseEntity<?> getProductById(@PathVariable("pid") UUID productId) {
+//		Optional<Product> product = productService.getProductById(productId);
+//		System.err.println("product ID IS : " + productId);
+//
+//		if (product.isPresent()) {
+//			return ResponseEntity.ok(product.get());
+//		} else {
+//			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product with ID " + productId + " not found.");
+//		}
+//	}
+	/*--------- PRODUCT END----------*/
+
+	/*---------- CART START-----------*/
 
 	@PostMapping("/addcart")
 	public ResponseEntity<?> addcart(@RequestParam("uid") UUID userId, @RequestParam("pid") UUID productId) {
@@ -136,17 +139,42 @@ public class UserController {
 		cart.setUser(user);
 		cart.setQty("1");
 		cartService.addCart(cart);
-
+//		cartService.getCartByUser(userId);
+		System.err.println("Userid is : " + userId);
+		System.err.println("Productid is : " + productId);
 		return ResponseEntity.ok(cart);
 	}
 
 	@GetMapping("/viewcart")
-	public List<Cart> getCartItems(@RequestParam("uid") UUID id) {
-		User user = userService.getById(id);
-		if (user == null) {
-			return new ArrayList<>();
-		}
-		return cartService.getCartByUser(id);
+	public List<Cart> getCartItems(@RequestParam("uid") UUID userId) {
+
+		return cartService.getCartByUser(userId);
 	}
+
+	@GetMapping("/viewallcart")
+	public List<Cart> viewAllCart() {
+		return cartService.viewAllCart();
+	}
+
+	/*---------- CART END-----------*/
+
+//	@PostMapping("/login")
+//	public Map<String, String> login(@RequestBody Map<String, String> user) {
+//
+//		String uname = user.get("uname");
+//		String pass = user.get("pass");
+//
+//		boolean userLog = userService.userLogin(uname, pass);
+//
+//		Map<String, String> response = new HashMap();
+//		if (userLog) {
+//			response.put("message", "User Login Successfully");
+//		} else {
+//			response.put("message", "Invalid User Please Login First!!");
+//		}
+//
+//		return response;
+//
+//	}
 
 }

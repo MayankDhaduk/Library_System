@@ -7,6 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { UUID } from 'crypto';
 import { Cart } from '../../admin-cart';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AdminCategory } from '../../admin-category';
+import { AdminService } from '../admin.service';
 
 @Component({
   selector: 'app-viewproductinuser',
@@ -19,13 +21,15 @@ export class ViewproductinuserComponent implements OnInit {
 
   products: AdminProduct[] = [];
   carts: Cart[] = [];
+  categories: AdminCategory[] = [];
   total: number = 0;
   userId: UUID | null = null;
 
-  constructor(private productService: UserServiceService, private cartService: UserServiceService, private userService: UserServiceService, private route: ActivatedRoute) { }
+  constructor(private productService: UserServiceService, private cartService: UserServiceService, private userService: UserServiceService, private route: ActivatedRoute, private categoryService: AdminService) { }
 
   ngOnInit(): void {
     this.viewproduct();
+    this.viewcategory();
     this.route.queryParams.subscribe(params => {
       this.userId = params['userId'] || null;
       if (!this.userId) {
@@ -41,6 +45,17 @@ export class ViewproductinuserComponent implements OnInit {
     }, (error) => {
       console.log("Error is : ", error);
     }
+    )
+  }
+
+  viewcategory() {
+    this.categoryService.viewCat().subscribe((data) => {
+      console.log("Categories Is : ", data);
+      this.categories = data;
+    },
+      (error) => {
+        console.log("Error is : ", error);
+      }
     )
   }
 
@@ -73,7 +88,8 @@ export class ViewproductinuserComponent implements OnInit {
 
 
     this.cartService.addToCart(this.userId, productId).subscribe({
-      next: () => {
+      next: (response) => {
+        this.carts.push(response)
         console.log("Product successfully added to cart!");
         console.log("UserId is : ", this.userId);
         console.log("ProductId is : ", productId);
@@ -88,17 +104,17 @@ export class ViewproductinuserComponent implements OnInit {
 
   }
 
-  loadCart(userId?: UUID) {
-    if (userId) {
-      this.cartService.viewCart(userId).subscribe({
-        next: (data) => {
-          this.carts = data;
-          this.total = this.carts.reduce((sum, item) => sum + item.product.pprice * item.qty, 0);
-        }, error: (error) => {
-          console.log("Error is : ", error)
-        }
-      })
-    }
-  }
+  // loadCart(userId?: UUID) {
+  //   if (userId) {
+  //     this.cartService.viewCart(userId).subscribe({
+  //       next: (data) => {
+  //         this.carts = data;
+  //         this.total = this.carts.reduce((sum, item) => sum + item.product.pprice * item.qty, 0);
+  //       }, error: (error) => {
+  //         console.log("Error is : ", error)
+  //       }
+  //     })
+  //   }
+  // }
 
 }

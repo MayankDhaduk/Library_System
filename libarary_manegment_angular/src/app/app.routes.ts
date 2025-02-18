@@ -7,6 +7,7 @@ import { ViewUserComponent } from './view-user/view-user.component';
 import { AdmincategoryComponent } from './admincategory/admincategory.component';
 import { AdminproductComponent } from './adminproduct/adminproduct.component';
 import { ViewproductinuserComponent } from './viewproductinuser/viewproductinuser.component';
+import { CartComponent } from './cart/cart.component';
 
 export const routes: Routes = [
     { path: '', component: UserRegisterComponent },
@@ -16,5 +17,7 @@ export const routes: Routes = [
     { path: 'viewuser', component: ViewUserComponent },
     { path: 'admincategory', component: AdmincategoryComponent },
     { path: 'adminproduct', component: AdminproductComponent },
-    { path: 'viewproduct', component: ViewproductinuserComponent }
+    { path: 'viewproduct', component: ViewproductinuserComponent },
+    { path: 'viewcart', component: CartComponent },
+    { path: "**", component: LoginUserComponent }
 ];

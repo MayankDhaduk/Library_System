@@ -1,6 +1,7 @@
 package com.example.demo.serviceImpl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +49,13 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Product productById(UUID id) {
-		
-		return productRepo.findById(id).orElseThrow(()->new RuntimeException("Product Not Found"));
+
+		return productRepo.findById(id).orElseThrow(() -> new RuntimeException("Product Not Found"));
 	}
+
+//	@Override
+//	public Optional<Product> getProductById(UUID productId) {
+//		return productRepo.findById(productId);
+//	}
 
 }

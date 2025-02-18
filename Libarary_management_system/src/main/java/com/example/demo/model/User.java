@@ -43,7 +43,6 @@ public class User {
 	private String phone;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	@JsonManagedReference
 	List<Cart> carts;
 
 	public UUID getId() {
