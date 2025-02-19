@@ -24,17 +24,19 @@ export class AdmincategoryComponent implements OnInit {
     this.viewCategory();
   }
 
-  addCategory() {
-    this.categoryService.addCat(this.newCategory).subscribe((data) => {
-      console.log(data);
-      console.log("Category Added Successfully")
-      this.newCategory = { catname: '' }
-      this.viewCategory();
-    },
-      (error) => {
-        console.log(error)
-      }
-    )
+  addCategory(id?: UUID) {
+    if (id) {
+      this.categoryService.addCat(this.newCategory).subscribe((data) => {
+        console.log(data);
+        console.log("Category Added Successfully")
+        this.newCategory = { catname: '' }
+        this.viewCategory();
+      },
+        (error) => {
+          console.log(error)
+        }
+      )
+    }
   }
 
   viewCategory() {
@@ -62,4 +64,30 @@ export class AdmincategoryComponent implements OnInit {
 
   }
 
+  getCategoryId(id?: UUID) {
+    if (id) {
+      this.categoryService.getCategoryById(id).subscribe((data) => {
+        console.log(data)
+        this.newCategory = data;
+      }, (error) => {
+        console.log("Error is : ", error)
+      }
+      )
+    }
+  }
+
+  updateCategory(id?: UUID) {
+    if (id) {
+      this.categoryService.updateCategory(id, this.newCategory).subscribe({
+        next: (data) => {
+          console.log("Category Updated Successfully");
+          console.log("Updated Category Is : ", data);
+          this.newCategory = { catname: '' };
+          this.viewCategory();
+        }, error: (error) => {
+          console.log("Error is : ", error);
+        }
+      })
+    }
+  }
 }

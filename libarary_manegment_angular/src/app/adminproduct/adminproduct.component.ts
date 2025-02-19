@@ -66,7 +66,6 @@ export class AdminproductComponent implements OnInit {
         this.viewproduct();
       }
     })
-
   }
 
   viewproduct() {
@@ -90,7 +89,4 @@ export class AdminproductComponent implements OnInit {
       })
     }
   }
-
 }
-
-

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Category;
 import com.example.demo.model.Product;
+import com.example.demo.repo.CategoryRepo;
 import com.example.demo.repo.ProductRepo;
 import com.example.demo.service.CategoryService;
 import com.example.demo.service.ProductService;
@@ -18,6 +19,9 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	ProductRepo productRepo;
+
+	@Autowired
+	CategoryRepo categoryRepo;
 
 	@Autowired
 	CategoryService categoryService;
@@ -53,9 +57,11 @@ public class ProductServiceImpl implements ProductService {
 		return productRepo.findById(id).orElseThrow(() -> new RuntimeException("Product Not Found"));
 	}
 
-//	@Override
-//	public Optional<Product> getProductById(UUID productId) {
-//		return productRepo.findById(productId);
-//	}
+	@Override
+	public List<Product> getProductsByCategoryName(String catname) {
+		Category category = categoryRepo.findByCatname(catname)
+				.orElseThrow(() -> new RuntimeException("Category not found: " + catname));
+		return productRepo.findByCategory(category);
+	}
 
 }

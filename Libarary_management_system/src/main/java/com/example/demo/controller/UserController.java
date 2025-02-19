@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.demo.model.Cart;
 import com.example.demo.model.Product;
@@ -26,6 +28,8 @@ import com.example.demo.model.User;
 import com.example.demo.service.CartService;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.UserService;
+
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -104,6 +108,37 @@ public class UserController {
 		return productService.viewAllProduct();
 	}
 
+	@GetMapping("/getcategoryname/{catname}")
+	public List<Product> getProductByCategoryName(@PathVariable String catname) {
+		return productService.getProductsByCategoryName(catname);
+	}
+
+	@GetMapping("/getProductById/{productId}")
+	public Product getProductById(@PathVariable("productId") UUID productId) {
+		System.err.println("Product is in find " + productId);
+		return productService.productById(productId);
+	}
+
+//	@GetMapping("/viewcart")
+//	public List<Cart> viewAllCart() {
+//		return cartService.viewCart();
+//	}
+
+	@GetMapping("/{userId}")
+	public List<Cart> getCartByUser(@PathVariable UUID userId) {
+		List<Cart> cartItems = cartService.getCartByUser(userId);
+
+		// Ensure the response contains only necessary details (avoid circular
+		// reference)
+		cartItems.forEach(cart -> {
+			if (cart.getProduct() != null) {
+				cart.getProduct().setCarts(null);// Prevent infinite recursion
+			}
+		});
+
+		return cartItems;
+	}
+
 //	@GetMapping("/getproduct/{productId}")
 //	public ResponseEntity<?> getProductById(@PathVariable("pid") UUID productId) {
 //		Optional<Product> product = productService.getProductById(productId);
@@ -139,42 +174,56 @@ public class UserController {
 		cart.setUser(user);
 		cart.setQty("1");
 		cartService.addCart(cart);
-//		cartService.getCartByUser(userId);
 		System.err.println("Userid is : " + userId);
 		System.err.println("Productid is : " + productId);
 		return ResponseEntity.ok(cart);
 	}
 
-	@GetMapping("/viewcart")
-	public List<Cart> getCartItems(@RequestParam("uid") UUID userId) {
-
-		return cartService.getCartByUser(userId);
-	}
-
-	@GetMapping("/viewallcart")
-	public List<Cart> viewAllCart() {
-		return cartService.viewAllCart();
-	}
-
-	/*---------- CART END-----------*/
-
-//	@PostMapping("/login")
-//	public Map<String, String> login(@RequestBody Map<String, String> user) {
-//
-//		String uname = user.get("uname");
-//		String pass = user.get("pass");
-//
-//		boolean userLog = userService.userLogin(uname, pass);
-//
-//		Map<String, String> response = new HashMap();
-//		if (userLog) {
-//			response.put("message", "User Login Successfully");
-//		} else {
-//			response.put("message", "Invalid User Please Login First!!");
+//	@GetMapping("/{uid}")
+//	public ResponseEntity<?> getShoppingCart(@PathVariable("uid") UUID userId) {
+//		if (userId == null) {
+//			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+//					.body(Collections.singletonMap("error", "User ID is required"));
 //		}
 //
-//		return response;
+//		User user = userService.getById(userId);
+//		if (user == null) {
+//			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+//					.body(Collections.singletonMap("error", "User not found"));
+//		}
 //
+//		List<Cart> cartItems = cartService.getCartByUser(userId);
+//		System.err.println("CartItem is : " + cartItems);
+//
+//		// Calculate total cost
+//		double sum = 0;
+//
+//		for (Cart c : cartService.getCartByUser(userId)) {
+//			double price = Double.parseDouble(c.getProduct().getPprice()); // Convert String to double
+//			int qty = Integer.parseInt(c.getQty()); // Convert String to int
+//
+//			double subtotal = price * qty;
+//			sum += subtotal;
+//		}
+//
+//		// Build response
+//		Map<String, Object> response = new HashMap<>();
+//		response.put("user", user);
+//		response.put("carts", cartItems);
+//		response.put("total", sum);
+//
+//		return ResponseEntity.ok(response);
 //	}
+
+	/*---------- CART END -----------*/
+
+	/*--------- LOGOUT START ---------*/
+
+	@GetMapping("/logout")
+	public void logoutuser(HttpSession session) {
+		session.invalidate();
+	}
+
+	/*--------- LOGOUT END ---------*/
 
 }

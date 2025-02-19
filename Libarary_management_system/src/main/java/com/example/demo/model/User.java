@@ -24,25 +24,22 @@ public class User {
 	@Column(columnDefinition = "BINARY(16)")
 	private UUID id;
 	@Column(name = "uname")
-	@NotNull
-	@NotBlank
 	private String uname;
 	@Column(name = "email")
-	@NotNull
-	@NotBlank
+
 	private String email;
 	@Column(name = "pass")
-	@NotNull
-	@NotBlank
+
 	private String pass;
 	@Column(name = "gender")
-	@NotBlank
+
 	private String gender;
 	@Column(name = "phone")
-	@NotBlank
+
 	private String phone;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	@JsonManagedReference
 	List<Cart> carts;
 
 	public UUID getId() {

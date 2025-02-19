@@ -4,15 +4,13 @@ import java.util.List;
 import java.util.UUID;
 
 import com.example.demo.model.Cart;
+import com.example.demo.model.Product;
 
 public interface CartService {
 
 	public Cart addCart(Cart cart);
 
-	public List<Cart> viewAllCart();
-
-//	public List<Cart> cartByUser(UUID id);
-
 	List<Cart> getCartByUser(UUID id);
-
+	
+	public List<Cart> viewCart();
 }

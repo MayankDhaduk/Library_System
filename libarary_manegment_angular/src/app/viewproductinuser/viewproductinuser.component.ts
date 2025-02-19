@@ -59,6 +59,17 @@ export class ViewproductinuserComponent implements OnInit {
     )
   }
 
+
+  getProductByCategory(catname: string) {
+    this.productService.getProductByCategory(catname).subscribe({
+      next: (data) => {
+        console.log("Data is : ", data);
+        this.products = data;
+      }, error: (error) => {
+        console.log("Error is : ", error);
+      }
+    })
+  }
   // addCart(productId: UUID | undefined, userId?: UUID) {
   //   if (userId && productId) {
   //     this.cartService.addtoCart(userId, productId).subscribe({

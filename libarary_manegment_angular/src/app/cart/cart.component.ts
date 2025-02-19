@@ -4,15 +4,16 @@ import { UUID } from 'crypto';
 import { Cart } from '../../admin-cart';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserServiceService } from '../user-service.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AdminProduct } from '../../admin-product';
 import { Console, error } from 'console';
+import { AdminService } from '../admin.service';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [LibraryshowComponent, FormsModule, CommonModule],
+  imports: [LibraryshowComponent, FormsModule, CommonModule,ReactiveFormsModule],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })
@@ -24,7 +25,7 @@ export class CartComponent implements OnInit {
   total: number = 0;
 
 
-  constructor(private route: ActivatedRoute, private router: Router, private cartService: UserServiceService, private productService: UserServiceService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private cartService: UserServiceService,private productService : UserServiceService) { }
 
 
   ngOnInit(): void {
@@ -37,22 +38,47 @@ export class CartComponent implements OnInit {
         this.router.navigate(['/login']);
       } 
       else {
-        this.loadCart(); 
+       this.viewAllCartData();
       }
     });
   }
 
-  loadCart(){
-    this.cartService.viewCart(this.userId!).subscribe({
-      next: (data) => {
-        console.log('Cart items received:', data);
-         this.carts = data || [];
-         this.viewproduct();
-         this.viewcartproducts();
-         
+  viewAllCartData()
+  {
+    if (!this.userId) return; // Prevents unnecessary calls if userId is missing
+
+    this.cartService.viewAllCart(this.userId).subscribe({
+      next: (carts: Cart[]) => {
+        this.carts = carts;
+        this.total = 0;
+  
+        // Fetch product details for each cart item
+        this.carts.forEach(cart => {
+          if (cart.product == null && cart.id) { // Only fetch if product is missing
+            this.fetchProductDetails(cart.id);
+          }
+        });
       },
       error: (error) => {
         console.error('Error loading cart:', error);
+      }
+    });
+  }
+
+  fetchProductDetails(productId: UUID): void {
+    this.productService.getProductById(productId).subscribe({
+      next: (productData: AdminProduct) => {
+        console.log("Fetched product details:", productData);
+        
+        // Find the cart item and update it with the product details
+        const cartItem = this.carts.find(cart => cart.id === productId);
+        if (cartItem) {
+          cartItem.product = productData;
+          this.total += productData.pprice * parseInt(cartItem.pqty); // Update total price
+        }
+      },
+      error: (error) => {
+        console.error("Error fetching product details:", error);
       }
     });
   }
@@ -67,18 +93,18 @@ export class CartComponent implements OnInit {
     })
   }
 
-  viewproduct() {
-    this.productService.viewproduct().subscribe({
-      next : (data)=>{
-        console.log('Product items received:', data);
-        this.products = data || [];
+  // viewproduct() {
+  //   this.productService.viewproduct().subscribe({
+  //     next : (data)=>{
+  //       console.log('Product items received:', data);
+  //       this.products = data || [];
         
-      },error : (error)=>{
-        console.error('Error loading product:', error);
-      }
+  //     },error : (error)=>{
+  //       console.error('Error loading product:', error);
+  //     }
 
-    })
-  }
+  //   })
+  // }
 
   addcat(productId: UUID | undefined) {
     if (!productId) {

@@ -2,31 +2,27 @@
 <div class="container mt-4">
     <h2 class="text-center">Shopping Cart</h2>
 
-    <div *ngIf="carts.length === 0" class="alert alert-warning text-center">
-        Your cart is empty.
-    </div>
-
-    <!-- <h5>Image</h5>
-    <h5>Product Name</h5>
-    <h5>Price</h5>
-    <h5>Quantity</h5> -->
-
-    <table class="table" border="2">
+    <table class="table">
         <thead>
             <tr>
                 <th>Image</th>
                 <th>Product Name</th>
-                <th>Product Price</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <!-- <th>Subtotal</th> -->
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let book of products">
-                <td><img src="data:image/jpg;base64,{{book.pimage}}" alt="{{ book.pimage}}" height="100px" width="100px"
-                        style="border-radius: 50%;"></td>
-                <td>{{ book.pname }}</td>
-                <td>${{ book.pprice }}</td>
+            <tr *ngFor="let cart of carts">
+                <td>
+                    <img *ngIf="cart.product?.pimage" src="data:image/jpg;base64,{{ cart.product?.pimage }}"
+                        alt="Product Image" width="100">
+                </td>
+                <td>{{ cart.product?.pname || 'Loading...' }}</td>
+                <td>${{ cart.product?.pprice || 0 }}</td>
+                <td>{{ cart.pqty }}</td>
+                <!-- <td>${{ (cart.product?.pprice || 0) * n(cart.pqty) }}</td> -->
             </tr>
         </tbody>
     </table>
-
 </div>

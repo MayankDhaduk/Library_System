@@ -47,6 +47,14 @@ export class AdminService {
     return this.http.delete<void>(`${this.adminUrl}/deletecat/${id}`)
   }
 
+  getCategoryById(id: UUID): Observable<AdminCategory> {
+    return this.http.get<AdminCategory>(`${this.adminUrl}/getCategoryById/${id}`);
+  }
+
+  updateCategory(id: UUID, category: AdminCategory,): Observable<AdminCategory> {
+    return this.http.put<AdminCategory>(`${this.adminUrl}/updateCategory/${id}`, category);
+  }
+
   addProduct(formData: FormData): Observable<AdminProduct> {
     return this.http.post<AdminProduct>(`${this.adminUrl}/addproduct`, formData);
   }
@@ -57,5 +65,13 @@ export class AdminService {
 
   deleteProduct(id: UUID): Observable<void> {
     return this.http.delete<void>(`${this.adminUrl}/deleteproduct/${id}`);
+  }
+
+  getProductById(id: UUID): Observable<AdminProduct> {
+    return this.http.get<AdminProduct>(`${this.adminUrl}/getProductById/${id}`)
+  }
+
+  updateProduct(id: UUID, formData: FormData): Observable<AdminProduct> {
+    return this.http.put<AdminProduct>(`${this.adminUrl}/updateproduct/${id}`, formData)
   }
 }

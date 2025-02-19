@@ -13,7 +13,7 @@ public interface UserService {
 
 	public void deleteUser(UUID id);
 
-	public User getById(UUID id);
+	public User getById(UUID userId);
 
 	public UUID userLogin(String uname, String pass);
 	

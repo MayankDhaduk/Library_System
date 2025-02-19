@@ -52,12 +52,29 @@ export class UserServiceService {
   //   return this.http.get<any>(`${this.apiUrl}/viewcart/${userId}`)
   // }
 
-  viewCart(userId: string): Observable<Cart[]> {
-    return this.http.get<Cart[]>(`${this.apiUrl}/viewcart?uid=${userId}`);
+  viewCart(userId: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${userId}`);
   }
 
   viewCartAllProduct(): Observable<Cart[]> {
     return this.http.get<Cart[]>(`${this.apiUrl}/viewallcart`);
+  }
+
+  logoutuser(): Observable<void> {
+    return this.http.get<void>(`${this.apiUrl}/logout`);
+  }
+
+  getProductByCategory(catname: string): Observable<AdminProduct[]> {
+    return this.http.get<AdminProduct[]>(`${this.apiUrl}/getcategoryname/${catname}`);
+  }
+
+  getProductById(productId: UUID): Observable<AdminProduct> {
+    console.log("Id is : ", productId);
+    return this.http.get<AdminProduct>(`${this.apiUrl}/${productId}`)
+  }
+
+  viewAllCart(userId: UUID): Observable<Cart[]> {
+    return this.http.get<Cart[]>(`${this.apiUrl}/${userId}`);
   }
 
 }

@@ -9,13 +9,16 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.model.Cart;
+import com.example.demo.model.Product;
 import com.example.demo.model.User;
 
 @Repository
 public interface CartRepo extends JpaRepository<Cart, UUID> {
 
-//	@Query("from Cart c where c.user = :user")
-//	List<Cart> findByUser(@Param("user") User user);
-
 	List<Cart> findByUserId(UUID userId);
+
+//	@Query("SELECT c.product.id FROM Cart c WHERE c.id = :id")
+//	String findProductIdByCartId(@Param("id") UUID id);
+//
+//	public List<Cart> cartByUser(UUID userId);
 }

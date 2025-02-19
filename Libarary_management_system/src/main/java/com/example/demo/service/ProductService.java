@@ -17,6 +17,8 @@ public interface ProductService {
 	public void deleteById(UUID id);
 
 	public Product productById(UUID id);
-	
+
+	public List<Product> getProductsByCategoryName(String catname);
+
 //	 public Optional<Product> getProductById(UUID productId);
 }

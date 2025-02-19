@@ -1,31 +1,26 @@
-/* ✅ Navbar Styling */
-.navbar-custom {
-    background-color: #ffffff !important;
-    /* White background */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Soft shadow */
-    padding: 10px 0;
+.navbar {
+    padding: 10px 20px;
 }
 
-.navbar-nav .nav-item .nav-link {
+.navbar-brand {
+    font-size: 28px;
+    color: #333;
+}
+
+.navbar-nav .nav-item {
+    margin: 0 10px;
+}
+
+.category-link {
+    font-size: 18px;
+    font-weight: 500;
     color: #333 !important;
-    /* Dark text */
-    font-size: 20px;
-    /* Adjusted font size */
-    font-weight: 600;
-    padding: 10px 15px;
-    transition: all 0.3s ease-in-out;
-    /* Smooth transition */
-    border-radius: 5px;
+    transition: color 0.3s ease-in-out;
 }
 
-.navbar-nav .nav-item .nav-link:hover {
-    background-color: #007bff;
-    /* Bootstrap primary color */
-    color: #ffffff !important;
-    /* White text */
-    transform: scale(1.05);
-    /* Slightly increase size */
+.category-link:hover {
+    color: #007bff !important;
+    text-decoration: underline;
 }
 
 .card-body {

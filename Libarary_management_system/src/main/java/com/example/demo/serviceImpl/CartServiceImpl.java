@@ -7,10 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Cart;
-import com.example.demo.model.Product;
 import com.example.demo.model.User;
 import com.example.demo.repo.CartRepo;
-import com.example.demo.repo.ProductRepo;
 import com.example.demo.repo.UserRepo;
 import com.example.demo.service.CartService;
 
@@ -25,33 +23,21 @@ public class CartServiceImpl implements CartService {
 	@Autowired
 	UserRepo userRepo;
 
-	@Autowired
-	ProductRepo productRepo;
-
 	@Override
-	public List<Cart> viewAllCart() {
-
-		return cartRepo.findAll();
+	public Cart addCart(Cart cart) {
+		// TODO Auto-generated method stub
+		return cartRepo.save(cart);
 	}
-
-//	@Override
-//	public List<Cart> cartByUser(UUID id) {
-//
-//		User user = userRepo.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found ID : " + id));
-//
-//		return cartRepo.findByUser(user);
-//	}
 
 	@Override
 	public List<Cart> getCartByUser(UUID id) {
-
+		// TODO Auto-generated method stub
 		return cartRepo.findByUserId(id);
 	}
 
 	@Override
-	public Cart addCart(Cart cart) {
-
-		return cartRepo.save(cart);
+	public List<Cart> viewCart() {
+		// TODO Auto-generated method stub
+		return cartRepo.findAll();
 	}
-
 }

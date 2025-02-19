@@ -3,50 +3,83 @@
         <div class="col-md-6 m-auto">
             <div class="card">
                 <div class="form-group text-center">
-                    <h1 class="font-italic fs-1 text-primary">
-                        Library Registration
-                    </h1>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="Username"
-                        [(ngModel)]="newUser.uname">
-                    <label for="floatingInput">Username</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="floatingEmail" placeholder="Email"
-                        [(ngModel)]="newUser.email">
-                    <label for="floatingEmail">Email</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="password" id="floatingPassword" class="form-control" placeholder="Password"
-                        [(ngModel)]="newUser.pass">
-                    <label for="floatingPassword">Password</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="text" id="floatingPhone" class="form-control" placeholder="Phone no"
-                        [(ngModel)]="newUser.phone">
-                    <label for="floatingPhone">Phone no</label>
-                </div>
-                <div class="form-group mb-3">
-                    <label class="form-label">Gender</label><br>
-                    <div class="form-check form-check-inline">
-                        <input type="radio" class="form-check-input" name="gender" id="male" value="male"
-                            [(ngModel)]="newUser.gender">
-                        <label class="form-check-label" for="male">Male</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input type="radio" class="form-check-input" name="gender" id="female" value="female"
-                            [(ngModel)]="newUser.gender">
-                        <label class="form-check-label" for="female">Female</label>
-                    </div>
+                    <h1 class="font-italic fs-1 text-primary">Library Registration</h1>
                 </div>
 
-                <div class="form-group text-center">
-                    <input type="submit" class="btn btn-outline-primary" value="Register" (click)="addUser()">
-                </div>
-                <div class="text-center">
-                    <a href="/login" class="text-primary">Already have an account? Login here</a>
-                </div>
+                <form [formGroup]="registerForm" (ngSubmit)="addUser()">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="Username"
+                            formControlName="uname" [(ngModel)]="newUser.uname">
+                        <label for="floatingInput">Username</label>
+                        <div *ngIf="registerForm.controls['uname'].invalid && registerForm.controls['uname'].touched"
+                            class="text-danger">
+                            Username must be 2-10 letters only.
+                        </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="floatingEmail" placeholder="Email"
+                            formControlName="email" [(ngModel)]="newUser.email">
+                        <label for="floatingEmail">Email</label>
+                        <div *ngIf="registerForm.controls['email'].invalid && registerForm.controls['email'].touched"
+                            class="text-danger">
+                            Enter a valid email with at least:
+                            <ul class="text-start">
+                                <li>One uppercase letter (A-Z)</li>
+                                <li>One lowercase letter (a-z)</li>
+                                <li>One number (0-9)</li>
+                                <li>One special character</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="password" id="floatingPassword" class="form-control" placeholder="Password"
+                            formControlName="pass" [(ngModel)]="newUser.pass">
+                        <label for="floatingPassword">Password</label>
+                        <div *ngIf="registerForm.controls['pass'].invalid && registerForm.controls['pass'].touched"
+                            class="text-danger">
+                            Password must contain at least 1 uppercase, 1 lowercase, 1 digit, and 1 special character.
+                        </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text" id="floatingPhone" class="form-control" placeholder="Phone no"
+                            formControlName="phone" [(ngModel)]="newUser.phone">
+                        <label for="floatingPhone">Phone no</label>
+                        <div *ngIf="registerForm.controls['phone'].invalid && registerForm.controls['phone'].touched"
+                            class="text-danger">
+                            Phone number must be exactly 10 digits.
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="form-label">Gender</label><br>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="gender" id="male" value="male"
+                                formControlName="gender" [(ngModel)]="newUser.gender">
+                            <label class="form-check-label" for="male">Male</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="gender" id="female" value="female"
+                                formControlName="gender" [(ngModel)]="newUser.gender">
+                            <label class="form-check-label" for="female">Female</label>
+                        </div>
+                        <div *ngIf="registerForm.controls['gender'].invalid && registerForm.controls['gender'].touched"
+                            class="text-danger">
+                            Please select gender.
+                        </div>
+                    </div>
+
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-outline-primary"
+                            [disabled]="registerForm.invalid">Register</button>
+                    </div>
+
+                    <div class="text-center">
+                        <a href="/login" class="text-primary">Already have an account? Login here</a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

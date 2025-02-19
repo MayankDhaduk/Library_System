@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,6 +44,11 @@ public class AdminController {
 
 	@PostMapping("/addcat")
 	public Category addCategory(@RequestBody Category category) {
+		return categoryService.addCategory(category);
+	}
+
+	@PutMapping("/updateCategory/{id}")
+	public Category updateCategory(@RequestBody Category category, @PathVariable UUID id) {
 		return categoryService.addCategory(category);
 	}
 
@@ -134,6 +140,36 @@ public class AdminController {
 
 	}
 
+	@PutMapping(value = "/updateproduct/{id}")
+	public Product updateProduct(@RequestParam("pname") String pname, @RequestParam("pprice") String pprice,
+			@RequestParam("pqty") String pqty, @RequestParam("pauthor") String pauthor,
+			@RequestParam("planguage") String planguage, @RequestParam("pdescription") String pdescription,
+			@RequestParam(value = "pimage", required = false) MultipartFile pimage, @RequestParam("catid") UUID catid,
+			@PathVariable UUID id) {
+
+		try {
+			Product product = new Product();
+
+			String base64Image = Base64.getEncoder().encodeToString(pimage.getBytes());
+
+			product.setPname(pname);
+			product.setPprice(pprice);
+			product.setPqty(pqty);
+			product.setPauthor(pauthor);
+			product.setPlanguage(planguage);
+			product.setPdescription(pdescription);
+			product.setPimage(base64Image);
+			Category category = categoryService.getById(catid);
+			product.setCategory(category);
+
+			return productService.addProduct(product);
+
+		} catch (Exception e) {
+			throw new RuntimeException("Error updating product", e);
+		}
+
+	}
+
 	@GetMapping("/viewproduct")
 	public List<Product> viewAllProduct() {
 		return productService.viewAllProduct();
@@ -142,6 +178,16 @@ public class AdminController {
 	@DeleteMapping("/deleteproduct/{id}")
 	public void deleteProduct(@PathVariable UUID id) {
 		productService.deleteById(id);
+	}
+
+	@GetMapping("/getProductById/{id}")
+	public Product getProductById(@PathVariable UUID id) {
+		return productService.productById(id);
+	}
+
+	@GetMapping("/getCategoryById/{id}")
+	public Category getCategoryById(@PathVariable UUID id) {
+		return categoryService.getById(id);
 	}
 
 }
